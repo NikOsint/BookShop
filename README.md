@@ -2,8 +2,8 @@
 
 A desktop app for maintaining a bookshop.
 
-Written on C++.
+Written on C++ using Qt.
 
-Requires QXlsx library (https://github.com/QtExcel/QXlsx).
+Requires Qt and QXlsx library (https://github.com/QtExcel/QXlsx).
 
-It should be put in the root directory of the project.
+QXlsx should be put in the root directory of the project.
