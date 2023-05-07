@@ -238,7 +238,7 @@ void BookShop::writeX(const std::string& filename) const {
     QXlsx::Document table(QString::fromStdString(filename));
     size_t newsz = 0;
     table.write(1, 1, "Size:");
-    table.write(1, 2, sz);
+    table.write(1, 2, static_cast<unsigned int>(sz));
     for (size_t i = 0; i < sz; i++) {
         if (bsh[i]) {
             BookType bt = bsh[i]->getBookType();
@@ -247,11 +247,11 @@ void BookShop::writeX(const std::string& filename) const {
             table.write(i + 2, 3, QString::fromStdString(bsh[i]->getAuthor()));
             table.write(i + 2, 4, QString::fromStdString(bsh[i]->getLanguage()));
             table.write(i + 2, 5, QString::fromStdString(bsh[i]->getPublisher()));
-            table.write(i + 2, 6, bsh[i]->getYear());
+            table.write(i + 2, 6, static_cast<unsigned int>(bsh[i]->getYear()));
             table.write(i + 2, 7, bsh[i]->getPrice());
-            table.write(i + 2, 8, bsh[i]->getPages());
-            table.write(i + 2, 9, bsh[i]->getWeight());
-            table.write(i + 2, 10, bsh[i]->getQuantity());
+            table.write(i + 2, 8, static_cast<unsigned int>(bsh[i]->getPages()));
+            table.write(i + 2, 9, static_cast<unsigned int>(bsh[i]->getWeight()));
+            table.write(i + 2, 10, static_cast<unsigned int>(bsh[i]->getQuantity()));
             switch (bt) {
             case EBOOK:
                 table.write(i + 2, 11, QString::fromStdString(((EducationBook*)bsh[i])->getSphere()));
@@ -259,7 +259,7 @@ void BookShop::writeX(const std::string& filename) const {
                 break;
             case FBOOK:
                 table.write(i + 2, 11, QString::fromStdString(((FictionBook*)bsh[i])->getGenre()));
-                table.write(i + 2, 12, ((FictionBook*)bsh[i])->getAge());
+                table.write(i + 2, 12, static_cast<unsigned int>(((FictionBook*)bsh[i])->getAge()));
                 break;
             case SBOOK:
                 table.write(i + 2, 11, QString::fromStdString(((ScienceBook*)bsh[i])->getArea()));
