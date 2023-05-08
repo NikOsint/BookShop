@@ -26,9 +26,9 @@ protected:
     QLineEdit *titleE, *authorE, *langE, *pubE, *dop1E, *dop2E, *filterE;
     QPushButton *xportTxtButt, *xportExcelButt, *importTxtButt, *importExcelButt,
     *clearButt, *linkButt, *addButt, *clearBookButt, *changeButt, *plusButt, *minusButt,
-    *filterButt, *cancelFButt;;
+    *filterButt, *cancelFButt;
     QComboBox *typeBox, *filterBox, *filterTypeBox;
-    QSpinBox *yearBox, *pagesBox, *weightBox, *quanBox, *dopBox, *quanDopBox, *ageBox,
+    QSpinBox *yearBox, *pagesBox, *weightBox, *quanBox, *quanDopBox, *ageBox,
     *yearF1Box, *yearF2Box;
     QDoubleSpinBox *priceBox, *priceF1Box, *priceF2Box;
     QTableWidget *bshList;
@@ -36,8 +36,8 @@ protected:
     BookShop bsh, filter;
 
 public:
-    Win(QWidget* parent = 0);
-    ~Win();
+    explicit Win(QWidget* parent = nullptr);
+    virtual ~Win();
 
     void begin() const;
 

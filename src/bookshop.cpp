@@ -235,81 +235,81 @@ void BookShop::read(const std::string& filename) {
 }
 
 void BookShop::writeX(const std::string& filename) const {
-    QXlsx::Document table(QString::fromStdString(filename));
-    size_t newsz = 0;
-    table.write(1, 1, "Size:");
-    table.write(1, 2, static_cast<unsigned int>(sz));
-    for (size_t i = 0; i < sz; i++) {
-        if (bsh[i]) {
-            BookType bt = bsh[i]->getBookType();
-            table.write(i + 2, 1, bt);
-            table.write(i + 2, 2, QString::fromStdString(bsh[i]->getTitle()));
-            table.write(i + 2, 3, QString::fromStdString(bsh[i]->getAuthor()));
-            table.write(i + 2, 4, QString::fromStdString(bsh[i]->getLanguage()));
-            table.write(i + 2, 5, QString::fromStdString(bsh[i]->getPublisher()));
-            table.write(i + 2, 6, static_cast<unsigned int>(bsh[i]->getYear()));
-            table.write(i + 2, 7, bsh[i]->getPrice());
-            table.write(i + 2, 8, static_cast<unsigned int>(bsh[i]->getPages()));
-            table.write(i + 2, 9, static_cast<unsigned int>(bsh[i]->getWeight()));
-            table.write(i + 2, 10, static_cast<unsigned int>(bsh[i]->getQuantity()));
-            switch (bt) {
-            case EBOOK:
-                table.write(i + 2, 11, QString::fromStdString(((EducationBook*)bsh[i])->getSphere()));
-                table.write(i + 2, 12, QString::fromStdString(((EducationBook*)bsh[i])->getLevel()));
-                break;
-            case FBOOK:
-                table.write(i + 2, 11, QString::fromStdString(((FictionBook*)bsh[i])->getGenre()));
-                table.write(i + 2, 12, static_cast<unsigned int>(((FictionBook*)bsh[i])->getAge()));
-                break;
-            case SBOOK:
-                table.write(i + 2, 11, QString::fromStdString(((ScienceBook*)bsh[i])->getArea()));
-                break;
-            default:
-                break;
-            }
-            newsz++;
-        }
-    }
-    table.saveAs(QString::fromStdString(filename));
-    if (sz != newsz) std::cerr << "ERROR WHILE WRITING\n";
+//    QXlsx::Document table(QString::fromStdString(filename));
+//    size_t newsz = 0;
+//    table.write(1, 1, "Size:");
+//    table.write(1, 2, static_cast<unsigned int>(sz));
+//    for (size_t i = 0; i < sz; i++) {
+//        if (bsh[i]) {
+//            BookType bt = bsh[i]->getBookType();
+//            table.write(i + 2, 1, bt);
+//            table.write(i + 2, 2, QString::fromStdString(bsh[i]->getTitle()));
+//            table.write(i + 2, 3, QString::fromStdString(bsh[i]->getAuthor()));
+//            table.write(i + 2, 4, QString::fromStdString(bsh[i]->getLanguage()));
+//            table.write(i + 2, 5, QString::fromStdString(bsh[i]->getPublisher()));
+//            table.write(i + 2, 6, static_cast<unsigned int>(bsh[i]->getYear()));
+//            table.write(i + 2, 7, bsh[i]->getPrice());
+//            table.write(i + 2, 8, static_cast<unsigned int>(bsh[i]->getPages()));
+//            table.write(i + 2, 9, static_cast<unsigned int>(bsh[i]->getWeight()));
+//            table.write(i + 2, 10, static_cast<unsigned int>(bsh[i]->getQuantity()));
+//            switch (bt) {
+//            case EBOOK:
+//                table.write(i + 2, 11, QString::fromStdString(((EducationBook*)bsh[i])->getSphere()));
+//                table.write(i + 2, 12, QString::fromStdString(((EducationBook*)bsh[i])->getLevel()));
+//                break;
+//            case FBOOK:
+//                table.write(i + 2, 11, QString::fromStdString(((FictionBook*)bsh[i])->getGenre()));
+//                table.write(i + 2, 12, static_cast<unsigned int>(((FictionBook*)bsh[i])->getAge()));
+//                break;
+//            case SBOOK:
+//                table.write(i + 2, 11, QString::fromStdString(((ScienceBook*)bsh[i])->getArea()));
+//                break;
+//            default:
+//                break;
+//            }
+//            newsz++;
+//        }
+//    }
+//    table.saveAs(QString::fromStdString(filename));
+//    if (sz != newsz) std::cerr << "ERROR WHILE WRITING\n";
 }
 
 void BookShop::readX(const std::string& filename) {
-    this->clear();
-    QXlsx::Document table(QString::fromStdString(filename));
-    std::string title, author, language, publisher, dop1, dop2, lens;
-    size_t len = 0, i, type, year, pages, weight, q;
-    float price;
-    len = table.cellAt(1, 2)->readValue().toInt();
-    for (i = 0; i < len; i++) {
-        type = table.cellAt(i + 2, 1)->readValue().toInt();
-        title = table.cellAt(i + 2, 2)->readValue().toString().toStdString();
-        author = table.cellAt(i + 2, 3)->readValue().toString().toStdString();
-        language = table.cellAt(i + 2, 4)->readValue().toString().toStdString();
-        publisher = table.cellAt(i + 2, 5)->readValue().toString().toStdString();
-        year = table.cellAt(i + 2, 6)->readValue().toInt();
-        price = table.cellAt(i + 2, 7)->readValue().toFloat();
-        pages = table.cellAt(i + 2, 8)->readValue().toInt();
-        weight = table.cellAt(i + 2, 9)->readValue().toInt();
-        q = table.cellAt(i + 2, 10)->readValue().toInt();
-        dop1 = table.cellAt(i + 2, 11)->readValue().toString().toStdString();
-        if (type == 1) {
-            dop2 = table.cellAt(i + 2, 12)->readValue().toString().toStdString();
-            FictionBook fb(title, author, language, publisher, year, price, pages, weight, q, dop1, std::stoi(dop2));
-            this->push(fb);
-        }
-        else if (type == 2) {
-            ScienceBook sb(title, author, language, publisher, year, price, pages, weight, q, dop1);
-            this->push(sb);
-        }
-        else if (type == 3) {
-            dop2 = table.cellAt(i + 2, 12)->readValue().toString().toStdString();
-            EducationBook eb(title, author, language, publisher, year, price, pages, weight, q, dop1, dop2);
-            this->push(eb);
-        }
-    }
-    table.saveAs(QString::fromStdString(filename));
-    if (i != len) std::cerr << "ERROR WHILE READING" << std::endl;
+//    this->clear();
+//    QXlsx::Document table(QString::fromStdString(filename));
+//    std::string title, author, language, publisher, dop1, dop2, lens;
+//    size_t len = 0, i, type, year, pages, weight, q;
+//    float price;
+//    len = table.cellAt(1, 2)->readValue().toInt();
+//    for (i = 0; i < len; i++) {
+//        type = table.cellAt(i + 2, 1)->readValue().toInt();
+//        title = table.cellAt(i + 2, 2)->readValue().toString().toStdString();
+//        author = table.cellAt(i + 2, 3)->readValue().toString().toStdString();
+//        language = table.cellAt(i + 2, 4)->readValue().toString().toStdString();
+//        publisher = table.cellAt(i + 2, 5)->readValue().toString().toStdString();
+//        year = table.cellAt(i + 2, 6)->readValue().toInt();
+//        price = table.cellAt(i + 2, 7)->readValue().toFloat();
+//        pages = table.cellAt(i + 2, 8)->readValue().toInt();
+//        weight = table.cellAt(i + 2, 9)->readValue().toInt();
+//        q = table.cellAt(i + 2, 10)->readValue().toInt();
+//        dop1 = table.cellAt(i + 2, 11)->readValue().toString().toStdString();
+//        if (type == 1) {
+//            dop2 = table.cellAt(i + 2, 12)->readValue().toString().toStdString();
+//            FictionBook fb(title, author, language, publisher, year, price, pages, weight, q, dop1, std::stoi(dop2));
+//            this->push(fb);
+//        }
+//        else if (type == 2) {
+//            ScienceBook sb(title, author, language, publisher, year, price, pages, weight, q, dop1);
+//            this->push(sb);
+//        }
+//        else if (type == 3) {
+//            dop2 = table.cellAt(i + 2, 12)->readValue().toString().toStdString();
+//            EducationBook eb(title, author, language, publisher, year, price, pages, weight, q, dop1, dop2);
+//            this->push(eb);
+//        }
+//    }
+//    table.saveAs(QString::fromStdString(filename));
+//    if (i != len) std::cerr << "ERROR WHILE READING" << std::endl;
 }
 
 void BookShop::resize() {

@@ -5,13 +5,13 @@
 #include <QTableWidget>
 #include <QLabel>
 
-#include "xlsxdocument.h"
-#include "xlsxchartsheet.h"
-#include "xlsxcellrange.h"
-#include "xlsxchart.h"
-#include "xlsxrichstring.h"
-#include "xlsxworkbook.h"
-using namespace QXlsx;
+//#include "xlsxdocument.h"
+//#include "xlsxchartsheet.h"
+//#include "xlsxcellrange.h"
+//#include "xlsxchart.h"
+//#include "xlsxrichstring.h"
+//#include "xlsxworkbook.h"
+//using namespace QXlsx;
 
 #include "educationbook.h"
 #include "fictionbook.h"

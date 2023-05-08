@@ -208,7 +208,7 @@ Win::Win(QWidget *parent)
     connect(linkButt, SIGNAL(clicked(bool)), this, SLOT(link()));
 }
 
-Win::~Win() {}
+Win::~Win() = default;
 
 void Win::begin() const {
     if (!bsh.getSize()) {
